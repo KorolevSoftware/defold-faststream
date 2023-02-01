@@ -14,3 +14,6 @@ input_method = HiddenInputField
 [project]
 title = Fast Stream
 
+[library]
+include_dirs = faststream
+
