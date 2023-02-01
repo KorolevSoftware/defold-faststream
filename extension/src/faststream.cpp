@@ -1,7 +1,7 @@
 // myextension.cpp
 // Extension lib defines
 #define LIB_NAME "FastStream"
-#define MODULE_NAME "fast_stream"
+#define MODULE_NAME "faststream"
 #define SCRIPT_LIB_NAME "buffer"
 #define SCRIPT_TYPE_NAME_BUFFER "buffer"
 #define SCRIPT_TYPE_NAME_BUFFERSTREAM "bufferstream"
@@ -137,4 +137,4 @@ static dmExtension::Result OnUpdateMyExtension(dmExtension::Params* params)
 
 static void OnEventMyExtension(dmExtension::Params* params, const dmExtension::Event* event) {}
 
-DM_DECLARE_EXTENSION(MyExtension, LIB_NAME, AppInitializeMyExtension, AppFinalizeMyExtension, InitializeMyExtension, OnUpdateMyExtension, OnEventMyExtension, FinalizeMyExtension)
+DM_DECLARE_EXTENSION(faststream, LIB_NAME, AppInitializeMyExtension, AppFinalizeMyExtension, InitializeMyExtension, OnUpdateMyExtension, OnEventMyExtension, FinalizeMyExtension)

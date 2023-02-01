@@ -7,10 +7,9 @@ function init(self)
 	})
 
 	local vertex_texcoord_stream = buffer.get_stream(buf, "texcoord0")
-	myextension.set_vector2_to_stream(vertex_texcoord_stream, 1, vmath.vector3(2, 3, 4))
-	myextension.set_vector2_to_stream(vertex_texcoord_stream, 2, vmath.vector3(10, 11, 22))
-	myextension.set_vector2_to_stream(vertex_texcoord_stream, 3, vmath.vector3(13, 14, 52))
-
+	faststream.set_vector2_to_stream(vertex_texcoord_stream, 1, vmath.vector3(2, 3, 4))
+	faststream.set_vector2_to_stream(vertex_texcoord_stream, 2, vmath.vector3(10, 11, 22))
+	faststream.set_vector2_to_stream(vertex_texcoord_stream, 3, vmath.vector3(13, 14, 52))
 	for i=1, points_count*2 do
 		print(vertex_texcoord_stream[i])
 	end
