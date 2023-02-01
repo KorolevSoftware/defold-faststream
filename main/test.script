@@ -1,0 +1,17 @@
+function init(self)
+	points_count = 10
+	local buf = buffer.create(points_count*2, {
+		{ name = hash("position"), type=buffer.VALUE_TYPE_FLOAT32, count = 4 },
+		{ name = hash("texcoord0"), type=buffer.VALUE_TYPE_FLOAT32, count = 2 },
+		{ name = hash("tint"), type=buffer.VALUE_TYPE_FLOAT32, count = 7 },
+	})
+
+	local vertex_texcoord_stream = buffer.get_stream(buf, "texcoord0")
+	myextension.set_vector2_to_stream(vertex_texcoord_stream, 1, vmath.vector3(2, 3, 4))
+	myextension.set_vector2_to_stream(vertex_texcoord_stream, 2, vmath.vector3(10, 11, 22))
+	myextension.set_vector2_to_stream(vertex_texcoord_stream, 3, vmath.vector3(13, 14, 52))
+
+	for i=1, points_count*2 do
+		print(vertex_texcoord_stream[i])
+	end
+end

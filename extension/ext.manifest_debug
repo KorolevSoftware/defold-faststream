@@ -1,0 +1,7 @@
+# C++ symbol in your extension
+name: "FastStream"
+
+platforms:
+    x86_64-win32:
+        context:
+            flags: ["-O0"]
