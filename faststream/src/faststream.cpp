@@ -10,6 +10,7 @@
 #include <dmsdk/sdk.h>
 #include <dmsdk/script.h>
 #include <dmsdk/resource/resource.h>
+#include <algorithm>
 #define DM_LUA_ERROR(_fmt_, ...)   _DM_LuaStackCheck.Error(_fmt_,  ##__VA_ARGS__); \
 
 namespace dmScript {
@@ -88,12 +89,62 @@ static int set_vector4_to_stream(lua_State* L)
     return 0;
 }
 
+using sFStreamSetter = int *(void* data_stream, int *date_value, int data_width);
+using getVectorData = uint8_t* (lua_State* L, int index);
+// Stack
+// 1 stream
+// 2 table vector3 || vector4
+
+static int set_table(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+
+    BufferStream* stream = CheckStream(L, 1);
+    // lua_pop(L, 1); //remove Stream from stack
+
+    // Table iteration
+    lua_pushnil(L); // first key
+    size_t data_count = lua_objlen(L, 2); // Stack 1 - table
+
+    if (!lua_next(L,  -2)) { // Check is empty table
+        return 0;
+    }
+    size_t element_count;
+    // getVectorData *func;
+    if (dmScript::IsVector3(L, -1)){
+        element_count = 3;
+        // func = (uint8_t* (lua_State* L, int index))dmScript::ToVector3;
+    } else {
+        element_count = 4;
+    }
+
+    uint8_t *data;
+    uint32_t vector_sizeof = sizeof(float)*element_count;
+    for( int index = 0; index < data_count; index++, lua_next(L,  -2)) {
+        if (element_count == 3)
+        {
+            dmVMath::Vector3* v= dmScript::ToVector3(L, -1);
+            data = (uint8_t*)v;
+        } else {
+            dmVMath::Vector4* v= dmScript::ToVector4(L, -1);
+            data = (uint8_t*)v;
+        }
+
+        memcpy((uint8_t*)(stream->m_Data) + index*stream->m_Stride*sizeof(float), data, vector_sizeof);
+        lua_pop(L, 1);
+    }
+    dmBuffer::UpdateContentVersion(stream->m_Buffer);
+    return 0;
+}
+
+
 // Functions exposed to Lua
 static const luaL_reg Module_methods[] =
 {   
     {"set_vector2_to_stream", set_vector2_to_stream},
     {"set_vector3_to_stream", set_vector3_to_stream},
     {"set_vector4_to_stream", set_vector4_to_stream},
+    {"set_table", set_table},
     {0, 0}
 };
 

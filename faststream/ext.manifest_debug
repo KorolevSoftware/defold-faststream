@@ -1,5 +1,5 @@
 # C++ symbol in your extension
-name: "FastStream"
+name: "faststream"
 
 platforms:
     x86_64-win32:
