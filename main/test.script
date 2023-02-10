@@ -11,8 +11,11 @@ function init(self)
 	faststream.set_vector2_to_stream(vertex_texcoord_stream, 2, vmath.vector3(10, 11, 22))
 	faststream.set_vector2_to_stream(vertex_texcoord_stream, 3, vmath.vector3(13, 14, 52))
 
-	local t = {vmath.vector3(1,2,3), vmath.vector3(1,2,3), vmath.vector3(1,2,3), vmath.vector3(1,2,3)}
-	
+	local t = {}
+	t[1] = vmath.vector3(1,2,3)
+	t[2] = vmath.vector3(1,2,3)
+	t[3] = vmath.vector3(1,2,3)
+	t[4] = vmath.vector3(1,2,3)
 	faststream.set_table(vertex_position_stream, t)
 	for i=1, #vertex_position_stream do
 		print(vertex_position_stream[i])
