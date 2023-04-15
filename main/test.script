@@ -9,18 +9,19 @@ function init(self)
 	local vertex_position_stream = buffer.get_stream(buf, "position")
 	local vertex_texcoord_stream = buffer.get_stream(buf, "texcoord0")
 	
-	faststream.set_vector2_to_stream(vertex_texcoord_stream, 1, vmath.vector3(2, 3, 4))
-	faststream.set_vector2_to_stream(vertex_texcoord_stream, 2, vmath.vector3(10, 11, 22))
-	faststream.set_vector2_to_stream(vertex_texcoord_stream, 3, vmath.vector3(13, 14, 52))
-	
+-- 	faststream.set_vector2_to_stream(vertex_texcoord_stream, 1, vmath.vector3(2, 3, 4))
+-- 	faststream.set_vector2_to_stream(vertex_texcoord_stream, 2, vmath.vector3(10, 11, 22))
+-- 	faststream.set_vector2_to_stream(vertex_texcoord_stream, 3, vmath.vector3(13, 14, 52))
+-- 
 	local t = {}
 	t[1] = vmath.vector3(1,2,3)
 	t[2] = vmath.vector3(1,2,3)
 	t[3] = vmath.vector3(1,2,3)
 	t[4] = vmath.vector3(1,2,3)
-	
+	local v = vmath.vector3(6.123233998228e-16, -10, 0)
+	faststream.set_table_raw(vertex_position_stream,  {v})
 	-- faststream.set_table(vertex_position_stream, t)
-	faststream.set_table_universe(vertex_position_stream, t)
+	faststream.set_table_universal(vertex_position_stream, t)
 	for i=1, #vertex_position_stream do
 		print(vertex_position_stream[i])
 	end

@@ -97,14 +97,19 @@ static int set_table(lua_State* L)
     DM_LUA_STACK_CHECK(L, 0);
 
     BufferStream* stream = CheckStream(L, 1);
-    // lua_pop(L, 1); //remove Stream from stack
-
-    // Table iteration
-    lua_pushnil(L); // first key
-    size_t data_count = lua_objlen(L, 2); // Stack 1 - table
-    if (data_count == 0) {
+    if (!lua_istable(L, 2)) {
         return 0;
     }
+
+    size_t data_count = lua_objlen(L, 2); // 2 - table
+
+    if (data_count == 0) { 
+        return 0;
+    }
+
+    // Check table data type
+    lua_pushnil(L); // first key
+    lua_next(L,  2);
 
     size_t element_count;
     // getVectorData *func;
@@ -146,7 +151,7 @@ void pusherNumberByIndex(BufferStream* stream, int &buffer_index, float value) {
 }
 
 void pusherVector3(lua_State* L, int stack_index, BufferStream* stream, int &buffer_index) { 
-    dmVMath::Vector3* v = (dmVMath::Vector3*)lua_touserdata(L, stack_index); //dmScript::ToVector3(L, stack_index);
+    dmVMath::Vector3* v = dmScript::ToVector3(L, stack_index);
 
     pusherNumberByIndex(stream, buffer_index, v->getX());
     pusherNumberByIndex(stream, buffer_index, v->getY());
@@ -154,7 +159,7 @@ void pusherVector3(lua_State* L, int stack_index, BufferStream* stream, int &buf
 }
 
 void pusherVector4(lua_State* L, int stack_index, BufferStream* stream, int &buffer_index){
-    dmVMath::Vector4* v = (dmVMath::Vector4*)lua_touserdata(L, stack_index); //dmScript::ToVector4(L, stack_index);
+    dmVMath::Vector4* v = dmScript::ToVector4(L, stack_index);
 
     pusherNumberByIndex(stream, buffer_index, v->getX());
     pusherNumberByIndex(stream, buffer_index, v->getY());
@@ -170,7 +175,7 @@ void pusherNumber(lua_State* L, int stack_index, BufferStream* stream, int &buff
 // 1 stream
 // 2 table vector3 || vector4 || number
 
-static int set_table_universe(lua_State* L)
+static int set_table_universal(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 0);
 
@@ -181,13 +186,10 @@ static int set_table_universe(lua_State* L)
         return 0;
     }
 
-    #if DM_DEBUG 
-        // return 1;
-    #endif
-
     // Check table data type
     lua_pushnil(L); // first key
     lua_next(L,  2);
+
 
     pusherFunc *func = nullptr;
 
@@ -219,11 +221,11 @@ static int set_table_universe(lua_State* L)
 // Functions exposed to Lua
 static const luaL_reg Module_methods[] =
 {
-    {"set_vector2_to_stream", set_vector2_to_stream},
-    {"set_vector3_to_stream", set_vector3_to_stream},
-    {"set_vector4_to_stream", set_vector4_to_stream},
-    {"set_table_fast", set_table},
-    {"set_table_universe", set_table_universe},
+    {"set_vector2", set_vector2_to_stream},
+    {"set_vector3", set_vector3_to_stream},
+    {"set_vector4", set_vector4_to_stream},
+    {"set_table_raw", set_table},
+    {"set_table_universal", set_table_universal},
     {0, 0}
 };
 
