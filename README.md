@@ -1,4 +1,4 @@
-![](/assets/faststream.png)
+![](https://github.com/user-attachments/assets/2c11ba97-163e-445f-bac5-21a1bfd97e92)
 
 # Fast Stream is Defold extension
 
