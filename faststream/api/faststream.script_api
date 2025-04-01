@@ -1,0 +1,68 @@
+- name: faststream
+  type: table
+  desc: FastStream extension for efficient buffer stream operations in Defold.
+  members:
+
+  - name: set_vector2
+    type: function
+    desc: Sets a Vector3 value at the specified index in the buffer stream.
+    parameters:
+    - name: stream
+      type: userdata
+      desc: The buffer stream to modify
+    - name: index
+      type: number
+      desc: The 1-based index where to set the vector
+    - name: vector
+      type: vector3
+      desc: The Vector3 value to set (x,y components will be used)
+
+  - name: set_vector3
+    type: function
+    desc: Sets a Vector3 value at the specified index in the buffer stream.
+    parameters:
+    - name: stream
+      type: userdata
+      desc: The buffer stream to modify
+    - name: index
+      type: number
+      desc: The 1-based index where to set the vector
+    - name: vector
+      type: vector3
+      desc: The Vector3 value to set
+
+  - name: set_vector4
+    type: function
+    desc: Sets a Vector4 value at the specified index in the buffer stream.
+    parameters:
+    - name: stream
+      type: userdata
+      desc: The buffer stream to modify
+    - name: index
+      type: number
+      desc: The 1-based index where to set the vector
+    - name: vector
+      type: vector4
+      desc: The Vector4 value to set
+
+  - name: set_table_raw
+    type: function
+    desc: Sets multiple vector values from a table to the buffer stream. The table should contain either Vector3 or Vector4 values.
+    parameters:
+    - name: stream
+      type: userdata
+      desc: The buffer stream to modify
+    - name: table
+      type: table
+      desc: Table containing Vector3 or Vector4 values to set
+
+  - name: set_table_universal
+    type: function
+    desc: Sets multiple values from a table to the buffer stream. Supports Vector3, Vector4, or number values.
+    parameters:
+    - name: stream
+      type: userdata
+      desc: The buffer stream to modify
+    - name: table
+      type: table
+      desc: Table containing Vector3, Vector4, or number values to set
